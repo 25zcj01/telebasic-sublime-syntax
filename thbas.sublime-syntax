@@ -1,0 +1,119 @@
+%YAML 1.2
+---
+name: TeleBASIC
+comment: underwood <underwood@telehack.com>
+file_extensions:
+  - bas
+scope: source.thbas
+contexts:
+  main:
+
+# Invalid
+# -- If it's not included here then it probably doesn't matter
+
+    # Lines not beginning with numbers
+    - match: '^([\s]+)?[a-zA-Z].*'
+      scope: invalid.illegal.thbas
+    # Lines starting with symbols
+    - match: '^([\s]+)?[\!\?\$\%\^\&\*\-\+\=\/\\\"\<\>\.\,\`\~\|\§\±\£\€].*'
+      scope: invalid.illegal.thbas
+    # Lines containing bare @ ! ? or words ending with them
+    - match: '((?i)[a-z]+[\!|\?|\@])|\@'
+      scope: invalid.illegal.thbas
+    # Curly/square brackets / pipes / backslashes
+    - match: '\{|\}|\[|\]|\||\\'
+      scope: invalid.illegal.thbas
+
+# Valid
+
+    # Double and single quotes
+    - match: '"'
+      scope: punctuation.definition.string.begin.thbas
+      push: double_quoted_string
+    - match: "'"
+      scope: punctuation.definition.string.begin.thbas
+      push: single_quoted_string
+
+    # Comments begin with 'REM' and finish at the end of the line
+    - match: '(?i)rem.*'
+      scope: punctuation.definition.comment.thbas
+           # markup.italic.thbas
+      push: line_comment
+
+    # BASIC control functions
+    - match: '\b(?i)(if|or|and|then|else|for|to|next|end|stop|run)\b'
+      scope: variable.annotation.thbas
+
+    # Statement separator colon
+    - match: ':'
+      scope: punctuation.separator.continuation.thbas
+
+    # Referenced line numbers
+    - match: '(?i)((go(to|sub)|then)\s\d+)|return'
+      scope: variable.annotation.thbas
+           # entity.name.label.thbas
+
+    # Leading line numbers
+    - match: '^([\s]+)?[\d]+'
+      scope: punctuation.definition.comment.thbas
+
+    # Built-in functions
+    - match: '\b(?i)(beep|brk|clear|close|cls|color|data|def fn|defdbl|defint|defsng|defstr|dim|home|input|let|locate|new|open|pclear0|pclear1|pmode0|poke|print|randomize|read|restore|sleep|tron|troff)\b'
+      scope: entity.name.function.thbas
+
+    # Numbers
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.thbas
+
+    # Built-in string functions and such
+    - match: '((?i)\b(arg|argv|bin|chr|date|dir|hex|inkey|left|mid|oct|polkey|right|space|spc|spa|str|string|tab|time|ups|user)\b\$)'
+      scope: constant.character.escape.thbas
+           # markup.italic.thbas
+
+    # String variables
+    - match: '((?i)[a-zA-Z]+\$)'
+      scope: constant.other.placeholder.thbas
+
+    # Built-in strict numerical variables
+    - match: '((?i)\b(argc)\b\%)'
+      scope: constant.numeric.thbas
+           # markup.italic
+
+    # Numerical variables
+    - match: '((?i)[a-zA-Z]+\%)'
+      scope: constant.numeric.thbas
+
+    # Maths operators
+    - match: '[\-\+\*\/^]'
+      scope: keyword.operator.arithmetic.thbas
+    - match: '(\=|<|>)'
+      scope: keyword.operator.assignment
+
+    # Built-in numerical variables/constants
+    - match: '\b(?i)(abs|asc|atn|cint|cos|csng|exp|height|instr|int|itm|len|lin|log|log10|nint|num|peek|pos|rec|rnd|sgn|sin|sqr|sqrt|sys|tan|tim|timer|typ|width|val)\b'
+      scope: constant.numeric.thbas
+           # markup.italic
+
+    # Any bare word to be considered a numerical variable
+    - match: '(?i)\b([a-z])+\b'
+      scope: constant.numeric.thbas
+
+  # End double quotes
+  double_quoted_string:
+    - meta_scope: string.quoted.double.thbas
+    - match: '"'
+      scope: punctuation.definition.string.end.thbas
+      pop: true
+
+  # End single quotes
+  single_quoted_string:
+    - meta_scope: string.quoted.single.thbas
+    - match: "'"
+      scope: punctuation.definition.string.end.thbas
+      pop: true
+
+  # End of string ends remark
+  line_comment:
+    - meta_scope: comment.line.thbas
+    - match: $
+      pop: true
