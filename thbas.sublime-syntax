@@ -17,8 +17,8 @@ contexts:
     # Lines starting with symbols
     - match: '^([\s]+)?[\!\?\$\%\^\&\*\-\+\=\/\\\"\<\>\.\,\`\~\|\§\±\£\€].*'
       scope: invalid.illegal.thbas
-    # Lines containing bare @ ! ? or words ending with them
-    - match: '((?i)[a-z]+[\!|\?|\@])|\@'
+    # Lines containing bare @ ? or words ending with them
+    - match: '((?i)[a-z]+[\?|\@])|\@'
       scope: invalid.illegal.thbas
     # Curly/square brackets / pipes / backslashes
     - match: '\{|\}|\[|\]|\||\\'
@@ -79,8 +79,12 @@ contexts:
       scope: constant.numeric.thbas
            # markup.italic
 
-    # Numerical variables
+    # Numeric integer value
     - match: '((?i)[a-zA-Z]+\%)'
+      scope: constant.numeric.thbas
+
+    # Numeric single-precision value
+    - match: '((?i)[a-zA-Z]+\!)'
       scope: constant.numeric.thbas
 
     # Maths operators
