@@ -41,7 +41,7 @@ contexts:
       push: line_comment
 
     # BASIC control functions
-    - match: '\b(?i)(if|or|and|then|else|for|to|next|end|stop|run)\b'
+    - match: '\b(?i)(if|or|and|then|else|for|to|step|next|end|stop|run)\b'
       scope: variable.annotation.thbas
 
     # Statement separator colon
@@ -91,7 +91,7 @@ contexts:
     - match: '[\-\+\*\/^]'
       scope: keyword.operator.arithmetic.thbas
     - match: '(\=|<|>)'
-      scope: keyword.operator.assignment
+      scope: keyword.operator.assignment.thbas
 
     # Built-in numerical variables/constants
     - match: '\b(?i)(abs|asc|atn|cint|cos|csng|exp|height|instr|int|itm|len|lin|log|log10|nint|num|peek|pos|rec|rnd|sgn|sin|sqr|sqrt|sys|tan|tim|timer|typ|width|val)\b'
