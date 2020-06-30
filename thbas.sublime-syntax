@@ -41,7 +41,7 @@ contexts:
       push: line_comment
 
     # BASIC control functions
-    - match: '\b(?i)(if|or|and|then|else|for|to|step|next|end|stop|run)\b'
+    - match: '\b(?i)(if|or|and|not|then|else|for|to|step|next|end|stop|run)\b'
       scope: variable.annotation.thbas
 
     # Statement separator colon
