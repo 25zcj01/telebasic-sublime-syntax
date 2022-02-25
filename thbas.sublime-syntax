@@ -70,6 +70,11 @@ contexts:
       scope: constant.character.escape.thbas
            # markup.italic.thbas
 
+    # TH_ extensions
+    - match: '((?i)\bth_(exec|syslevel|has(admin|login|root|badge)|defgroup|plan|(local|gm)time|modem|hostname|netstat|md5(hex|base64)|sed|rev?)\b\$?)'
+      scope: constant.character.escape.thbas
+           # markup.italic.thbas
+
     # String variables
     - match: '((?i)[a-zA-Z]+\$)'
       scope: constant.other.placeholder.thbas
